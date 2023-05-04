@@ -19,7 +19,10 @@ class Api::V1::ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
-    if @reservation.save
+    resultado = Reservation.where(booking_date: params[:booking_date]).select {|reserva| reserva.table.restaurant_id == params[:restaurant_id]}.count
+    # p resultado = Reservation.where(booking_date: params[:booking_date])
+    if resultado <= 2
+      @reservation.save
       render json: { messagge: 'Creado correctamente' }, status: 200
     else
       # render json: { error: @reservation.errors.full_messages.join(", ") }, status: :unprocessable_entity

@@ -28,6 +28,7 @@ table_1 = Table.new(number: "1", restaurant_id: restaurant_1.id)
 table_1.save!
 table_2 = Table.new(number: "2", restaurant_id: restaurant_2.id)
 table_2.save!
+
 puts "Mesa creada"
 
 reservation_1 = Reservation.new(group_size: 4, booking_date: "2023,4,5", user_id: user_1.id, table_id: table_1.id)

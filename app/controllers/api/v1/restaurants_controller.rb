@@ -1,4 +1,4 @@
-class Api::V1::RestaurantController < ApplicationController
+class Api::V1::RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[show edit update destroy]
 
   def index

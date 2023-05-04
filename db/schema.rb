@@ -31,10 +31,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_03_165538) do
     t.string "address"
     t.string "city"
     t.string "photo_url"
-    t.bigint "table_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["table_id"], name: "index_restaurants_on_table_id"
   end
 
   create_table "tables", force: :cascade do |t|
@@ -59,6 +57,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_03_165538) do
 
   add_foreign_key "reservations", "tables"
   add_foreign_key "reservations", "users"
-  add_foreign_key "restaurants", "tables"
   add_foreign_key "tables", "restaurants"
 end

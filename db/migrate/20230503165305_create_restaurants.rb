@@ -6,7 +6,6 @@ class CreateRestaurants < ActiveRecord::Migration[7.0]
       t.string :address
       t.string :city
       t.string :photo_url
-      t.references :table, null: false, foreign_key: true
 
       t.timestamps
     end

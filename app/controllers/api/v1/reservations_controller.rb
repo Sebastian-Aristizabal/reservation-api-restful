@@ -1,29 +1,33 @@
-class Api::V1::ReservationController < ApplicationController
+class Api::V1::ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[show edit update destroy]
 
   def index
-    @reservations = Reservation.all
+    table = Table.where(restaurant_id: params[:restaurant_id])
+    @reservations = Reservation.where(table_id: table)
+    # @reservations = Reservation.all
     render json: @reservations
   end
 
   def show
-    render json: @reservations
+    render json: @reservation
   end
 
   def new
     @user = User.new
   end
 
-  def edit
-  end
 
   def create
     @reservation = Reservation.new(reservation_params)
     if @reservation.save
-      render json: @reservations
+      render json: { messagge: 'Creado correctamente' }, status: 200
     else
-      render error: { error: 'Unable to create Reservation.' }, status: 400
+      # render json: { error: @reservation.errors.full_messages.join(", ") }, status: :unprocessable_entity
+      render json: { error: @reservation.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def edit
   end
 
   def update
@@ -38,7 +42,7 @@ class Api::V1::ReservationController < ApplicationController
   def destroy
     if @reservation
       @reservation.destroy
-      render json: { messagge: 'Reservation was successfully updated.' }, stauts: 200
+      render json: { messagge: 'Reservation was successfully delate.' }, stauts: 200
     else
       render error: { error: 'Unable to create Reservation.' }, status: 400
     end
@@ -51,6 +55,6 @@ class Api::V1::ReservationController < ApplicationController
   end
 
   def reservation_params
-    params.require(:reservation).permit(:name, :email, :phone, :party_size, :reservation_date, :user_id, :restaurant_id)
+    params.require(:reservation).permit(:group_size, :booking_date, :user_id, :table_id)
   end
 end

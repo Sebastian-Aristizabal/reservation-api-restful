@@ -1,6 +1,6 @@
 class Table < ApplicationRecord
   belongs_to :restaurant
-  has_one :reservation
+  has_many :reservations
 
 
   validate :validate_max_tables_per_restaurant

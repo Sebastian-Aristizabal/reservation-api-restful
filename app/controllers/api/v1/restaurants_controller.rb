@@ -20,9 +20,9 @@ class Api::V1::RestaurantsController < ApplicationController
   def create
     @restaurant = Restaurant.new(restaurant_params)
     if @restaurant.save
-      render json: { messagge: 'Creado correctamente' }, status: :created
+      render json: { messagge: 'Created correctly' }, status: :created
     else
-      render error: { error: 'Unable to create Restaurant.' }, status: 400
+      render json: {status: 404, message: "Character not found"}, status: 404
     end
   end
 

@@ -18,9 +18,9 @@ restaurant_2 = Restaurant.new(name: "el tragadero", description: "las mejores bu
 restaurant_2.save!
 puts "Restaurante creado"
 
-user_1 = User.new(email: "elbrayan@hotmail.com", password: "123456")
+user_1 = User.new(name: "Diego Marín Montoya", username: "Dieguchi", email: "elbrayan@hotmail.com", password: "123456")
 user_1.save!
-user_2 = User.new(email: "carlota@hotmail.com", password: "123456")
+user_2 = User.new(name: "Carlota Alarcón Gate", username: "Carluchi", email: "carlota@hotmail.com", password: "123456")
 user_2.save!
 puts "Usuario creado"
 

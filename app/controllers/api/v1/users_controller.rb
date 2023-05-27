@@ -6,7 +6,7 @@ class Api::V1::UsersController < ApplicationController
     if @user
       render json: @user
     else
-      render json: {status: 404, message: "user not found"}, status: 404
+      render json: { status: 404, message: 'user not found' }, status: 404
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V1::UsersController < ApplicationController
         render json: @user.errors, status: :unprocessable_entity
       end
     else
-      render json: {status: 404, message: "User not found"}, status: 404
+      render json: { status: 404, message: 'User not found' }, status: 404
     end
   end
 
@@ -42,7 +42,7 @@ class Api::V1::UsersController < ApplicationController
         render json: @user.errors, status: :unprocessable_entity
       end
     else
-      render json: {status: 404, message: "User not found"}, status: 404
+      render json: { status: 404, message: 'User not found' }, status: 404
     end
   end
 

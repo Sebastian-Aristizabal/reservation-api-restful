@@ -1,5 +1,6 @@
 class Api::V1::ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[show edit update destroy]
+  before_action :check_login, only: %i[create]
 
   def index
     table = Table.where(restaurant_id: params[:restaurant_id])
@@ -16,13 +17,23 @@ class Api::V1::ReservationsController < ApplicationController
     @user = User.new
   end
 
+  # def create
+  #   @reservation = Reservation.new(reservation_params)
+  #   resultado = Reservation.where(booking_date: params[:booking_date]).select { |reserva| reserva.table.restaurant_id == params[:restaurant_id] }.count
+  #   # p resultado = Reservation.where(booking_date: params[:booking_date])
+  #   if resultado <= 2 && @reservation.save
+  #     render json: { messagge: 'Creado correctamente' }, status: 200
+  #   else
+  #     # render json: { error: @reservation.errors.full_messages.join(", ") }, status: :unprocessable_entity
+  #     render json: { error: @reservation.errors.full_messages }, status: :unprocessable_entity
+  #   end
+  # end
 
   def create
-    @reservation = Reservation.new(reservation_params)
-    resultado = Reservation.where(booking_date: params[:booking_date]).select {|reserva| reserva.table.restaurant_id == params[:restaurant_id]}.count
+    @reservation = current_user.reservations.build(reservation_params)
+    resultado = Reservation.where(booking_date: params[:booking_date]).select { |reserva| reserva.table.restaurant_id == params[:restaurant_id] }.count
     # p resultado = Reservation.where(booking_date: params[:booking_date])
-    if resultado <= 2
-      @reservation.save
+    if resultado <= 2 && @reservation.save
       render json: { messagge: 'Creado correctamente' }, status: 200
     else
       # render json: { error: @reservation.errors.full_messages.join(", ") }, status: :unprocessable_entity
@@ -30,12 +41,12 @@ class Api::V1::ReservationsController < ApplicationController
     end
   end
 
+
   def edit
   end
 
   def update
-    if @reservation
-      @reservation.update(reservation_params)
+    if @reservation.update(reservation_params)
       render json: { messagge: 'Reservation was successfully updated.' }, stauts: 200
     else
       render error: { error: 'Unable to create Reservation.' }, status: 400
@@ -43,8 +54,7 @@ class Api::V1::ReservationsController < ApplicationController
   end
 
   def destroy
-    if @reservation
-      @reservation.destroy
+    if @reservation.destroy
       render json: { messagge: 'Reservation was successfully delate.' }, stauts: 200
     else
       render error: { error: 'Unable to create Reservation.' }, status: 400
@@ -54,7 +64,7 @@ class Api::V1::ReservationsController < ApplicationController
   private
 
   def set_reservation
-    @reservation = Reservation.find(params[:id])
+    @reservation = Reservation.find_by_id(params[:id])
   end
 
   def reservation_params

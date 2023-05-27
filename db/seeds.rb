@@ -31,9 +31,12 @@ table_2.save!
 
 puts "Mesa creada"
 
-reservation_1 = Reservation.new(group_size: 4, booking_date: "2023,4,5", user_id: user_1.id, table_id: table_1.id)
+reservation_1 = Reservation.new(group_size: 4, booking_date: "2023/4/5", user_id: user_1.id, table_id: table_1.id)
 reservation_1.save!
 
-reservation_2 = Reservation.new(group_size: 4, booking_date: "2023,4,5", user_id: user_2.id, table_id: table_2.id)
+reservation_2 = Reservation.new(group_size: 4, booking_date: "2023/4/5", user_id: user_2.id, table_id: table_2.id)
 reservation_2.save!
 puts "Reservación creada"
+
+# to do queries and know how many reservations are in a specific date
+# resultado = Reservation.where(booking_date: "2023/5/28").select { |reserva| reserva.table.restaurant_id == params[:restaurant_id] }.count

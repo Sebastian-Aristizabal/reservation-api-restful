@@ -1,6 +1,7 @@
 class Api::V1::ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[show edit update destroy]
+  before_action :set_reservation, only: %i[show update destroy]
   before_action :check_login, only: %i[create]
+  before_action :check_owner, only: %i[update destroy]
 
   def index
     table = Table.where(restaurant_id: params[:restaurant_id])
@@ -11,10 +12,6 @@ class Api::V1::ReservationsController < ApplicationController
 
   def show
     render json: @reservation
-  end
-
-  def new
-    @user = User.new
   end
 
   # def create
@@ -47,21 +44,26 @@ class Api::V1::ReservationsController < ApplicationController
 
   def update
     if @reservation.update(reservation_params)
-      render json: { messagge: 'Reservation was successfully updated.' }, stauts: 200
+      render json: @reservation
     else
-      render error: { error: 'Unable to create Reservation.' }, status: 400
+      render json: @reservation.errors, status:
+      :unprocessable_entity
     end
   end
 
   def destroy
     if @reservation.destroy
-      render json: { messagge: 'Reservation was successfully delate.' }, stauts: 200
+      render json: { messagge: 'Reservation was successfully deleted.' }, stauts: 200
     else
       render error: { error: 'Unable to create Reservation.' }, status: 400
     end
   end
 
   private
+
+  def check_owner
+    head :forbidden unless @reservation.user_id == current_user&.id
+  end
 
   def set_reservation
     @reservation = Reservation.find_by_id(params[:id])

@@ -12,7 +12,7 @@ class Reservation < ApplicationRecord
   # end
 
   def validate_max_reservations
-    if Reservation.count >= 11
+    if Reservation.count >= 20
       errors.add(:base, "No se pueden crear más de 20 reservaciones entre todos los restaurantes")
     end
   end

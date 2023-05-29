@@ -30,6 +30,7 @@ class Api::V1::ReservationsController < ApplicationController
     @reservation = current_user.reservations.build(reservation_params)
     resultado = Reservation.where(booking_date: params[:booking_date]).select { |reserva| reserva.table.restaurant_id == params[:restaurant_id] }.count
     # p resultado = Reservation.where(booking_date: params[:booking_date])
+    # resultado = Reservation.where(booking_date: "2023/5/28").select { |reserva| reserva.table.restaurant_id == params[:restaurant_id] }.count
     if resultado <= 2 && @reservation.save
       render json: { messagge: 'Creado correctamente' }, status: 200
     else

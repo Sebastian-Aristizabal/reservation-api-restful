@@ -23,7 +23,7 @@ class Api::V1::UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user
-      if @user.update(user_params)
+      if @user&.update(user_params)
         render json: { messagge: 'User was successfully updated.' }, status: 200
       else
         render json: @user.errors, status: :unprocessable_entity

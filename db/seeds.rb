@@ -12,9 +12,9 @@ Table.destroy_all
 User.destroy_all
 Restaurant.destroy_all
 
-restaurant_1 = Restaurant.new(name: "El bar de Andres", description: "Las mejores colas de mono y Piscos de todo copiapó", address: "Calle de la Luna 13", city: "Copiapó", photo_url: "www.lewagon.com")
+restaurant_1 = Restaurant.new(name: "El bar de Andres", description: "Las mejores colas de mono y Piscos de todo copiapó", address: "Calle de la Luna 13", city: "Copiapó", photo_url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80")
 restaurant_1.save!
-restaurant_2 = Restaurant.new(name: "el tragadero", description: "las mejores butifarras", address: "calle 50", city: "medellín", photo_url: "www.lewagon.com")
+restaurant_2 = Restaurant.new(name: "el tragadero", description: "las mejores butifarras", address: "calle 50", city: "medellín", photo_url: "https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=385&q=80")
 restaurant_2.save!
 puts "Restaurante creado"
 

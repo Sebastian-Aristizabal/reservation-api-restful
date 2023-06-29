@@ -2,7 +2,7 @@ class Api::V1::TablesController < ApplicationController
 # before_action :set_restaurant, only: %i[show edit update destroy]
   def index
     @tables = Table.where(restaurant_id: params[:restaurant_id])
-    render json: @tables
+    render json: TableSerializer.new(@tables).serializable_hash
   end
 
   # def show
@@ -20,7 +20,7 @@ class Api::V1::TablesController < ApplicationController
     @table = Table.new(table_params)
     @table.restaurant_id = params[:restaurant_id]
     if @table.save
-      render json: { messagge: 'Creado correctamente' }, status: :created
+      render json: TableSerializer.new(@table).serializable_hash, status: :created
     else
       render json: { error: @table.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end

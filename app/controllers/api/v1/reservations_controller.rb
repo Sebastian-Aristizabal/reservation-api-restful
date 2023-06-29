@@ -7,11 +7,12 @@ class Api::V1::ReservationsController < ApplicationController
     table = Table.where(restaurant_id: params[:restaurant_id])
     @reservations = Reservation.where(table_id: table)
     # @reservations = Reservation.all
-    render json: @reservations
+    render json: ReservationSerializer.new(@reservations).serializable_hash
   end
 
   def show
-    render json: @reservation
+    options = { include: [:user, :table] }
+    render json: ReservationSerializer.new(@reservation, options).serializable_hash
   end
 
   # def create
@@ -32,7 +33,7 @@ class Api::V1::ReservationsController < ApplicationController
     # p resultado = Reservation.where(booking_date: params[:booking_date])
     # resultado = Reservation.where(booking_date: "2023/5/28").select { |reserva| reserva.table.restaurant_id == params[:restaurant_id] }.count
     if resultado <= 15 && @reservation.save
-      render json: { messagge: 'Creado correctamente' }, status: 200
+      render json: ReservationSerializer.new(@reservation).serializable_hash, status: :created
     else
       # render json: { error: @reservation.errors.full_messages.join(", ") }, status: :unprocessable_entity
       render json: { error: @reservation.errors.full_messages }, status: :unprocessable_entity
@@ -45,7 +46,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   def update
     if @reservation.update(reservation_params)
-      render json: @reservation
+      render json: ReservationSerializer.new(@reservation).serializable_hash
     else
       render json: @reservation.errors, status:
       :unprocessable_entity

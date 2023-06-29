@@ -3,11 +3,11 @@ class Api::V1::RestaurantsController < ApplicationController
 
   def index
     @restaurants = Restaurant.all
-    render json: @restaurants
+    render json: RestaurantSerializer.new(@restaurants).serializable_hash
   end
 
   def show
-    render json: @restaurant
+    render json: RestaurantSerializer.new(@restaurant).serializable_hash
   end
 
   def new
@@ -20,16 +20,16 @@ class Api::V1::RestaurantsController < ApplicationController
   def create
     @restaurant = Restaurant.new(restaurant_params)
     if @restaurant.save
-      render json: { messagge: 'Created correctly' }, status: :created
+      render json: RestaurantSerializer.new(@restaurant).serializable_hash, status: :created
     else
-      render json: {status: 404, message: "Character not found"}, status: 404
+      render json: {status: 404, message: "Unable to update Restaurant"}, status: 404
     end
   end
 
   def update
     if @restaurant
       @restaurant.update(restaurant_params)
-      render json: { messagge: 'Restaurant was successfully updated.' }, status: 200
+      render json: RestaurantSerializer.new(@restaurant).serializable_hash, status: 200
     else
       render error: { error: 'Unable to create Restaurant.' }, status: 400
     end
@@ -38,9 +38,9 @@ class Api::V1::RestaurantsController < ApplicationController
   def destroy
     if @restaurant
       @restaurant.destroy
-      render json: { messagge: 'Restaurant was successfully updated.' }, status: 200
+      render json: { messagge: 'Restaurant was successfully destroy.' }, status: 200
     else
-      render error: { error: 'Unable to create Restaurant.' }, status: 400
+      render error: { error: 'Unable to destroy Restaurant.' }, status: 400
     end
   end
 

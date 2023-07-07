@@ -14,5 +14,6 @@
 class Restaurant < ApplicationRecord
   has_many :tables
   include PgSearch::Model
-  pg_search_scope :search_by_title, against: :title
+  pg_search_scope :search_by_name, against: :name
+  pg_search_scope :search_by_city, against: :city
 end

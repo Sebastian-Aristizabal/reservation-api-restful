@@ -21,7 +21,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Reservation < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, dependent: :destroy
   belongs_to :table
 
   # validate :validate_max_reservations_per_restaurant_per_day

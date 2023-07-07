@@ -17,7 +17,7 @@
 #  fk_rails_...  (restaurant_id => restaurants.id)
 #
 class Table < ApplicationRecord
-  belongs_to :restaurant
+  belongs_to :restaurant, dependent: :destroy
   has_many :reservations
 
 

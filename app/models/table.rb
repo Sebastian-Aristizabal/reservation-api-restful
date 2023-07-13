@@ -1,5 +1,23 @@
+# == Schema Information
+#
+# Table name: tables
+#
+#  id            :bigint           not null, primary key
+#  number        :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  restaurant_id :bigint           not null
+#
+# Indexes
+#
+#  index_tables_on_restaurant_id  (restaurant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (restaurant_id => restaurants.id)
+#
 class Table < ApplicationRecord
-  belongs_to :restaurant
+  belongs_to :restaurant, dependent: :destroy
   has_many :reservations
 
 
